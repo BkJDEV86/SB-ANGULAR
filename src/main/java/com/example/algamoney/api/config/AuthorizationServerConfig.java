@@ -1,8 +1,11 @@
 package com.example.algamoney.api.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,11 +14,17 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import com.example.algamoney.api.config.token.CustomTokenEnhancer;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+@Profile("oauth-security")
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableAuthorizationServer
@@ -54,6 +63,11 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 	@Override
 	
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		
+		TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+		tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
+		
+		
 		endpoints
 		    .tokenStore(tokenStore())
 		    // Conversor de Token
@@ -64,6 +78,9 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 		
 	}
 	
+
+
+
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
@@ -85,6 +102,12 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 		// aqui abaixo não retorna mais em memória e sim em jwtTokenStore
 		//return new InMemoryTokenStore();
 		
+	}
+	
+	private TokenEnhancer tokenEnhancer() {
+		
+		// Customização do token para mostrar o nome do usuário logado na tela
+		return new CustomTokenEnhancer();
 	}
 	
 
