@@ -21,6 +21,9 @@ import com.example.algamoney.api.config.property.AlgamoneyApiProperty;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter{
+	
+
+	
 
 
 	@Autowired
@@ -38,7 +41,7 @@ public class CorsFilter implements Filter{
         response.setHeader("Access-Control-Allow-Credentials", "true");// É para o cookie ser enviado.
 
         // Se a requisição for um options
-		if ("OPTIONS".equals(request.getMethod()) && algamoneyApiProperty.getOriginPermitida()	.equals(request.getHeader("Origin"))) {
+		if ("OPTIONS".equals(request.getMethod()) && algamoneyApiProperty.getOriginPermitida().equals(request.getHeader("Origin"))) {
 			response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
         	response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
         	response.setHeader("Access-Control-Max-Age", "3600");// Tempo que o Browser vai fazer a
