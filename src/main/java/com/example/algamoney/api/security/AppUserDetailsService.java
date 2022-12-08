@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.algamoney.api.model.Usuario;
 import com.example.algamoney.api.repository.UsuarioRepository;
+import com.example.algamoney.api.security.util.UsuarioSistema;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
@@ -31,7 +32,9 @@ public class AppUserDetailsService implements UserDetailsService {
 		Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
 		Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuário e/ou senha incorretos"));
 		// Retorna email, senhas e permissões.
-		return new User(email, usuario.getSenha(), getPermissoes(usuario));
+		
+		// Retornar UsuarioSistema para ser recuperado no CustomTokenEnhancer
+		return new UsuarioSistema(usuario, getPermissoes(usuario));
 	}
 
 	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {

@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -21,8 +20,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import com.example.algamoney.api.config.token.CustomTokenEnhancer;
-
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Profile("oauth-security")
 @SuppressWarnings("deprecation")
@@ -74,6 +71,7 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 		    .accessTokenConverter(accessTokenConverter())
 	     	.authenticationManager(authenticationManager)
 		     .userDetailsService(userDetailsService)
+		     .tokenEnhancer(tokenEnhancerChain)
 		        .reuseRefreshTokens(false);
 		
 	}
