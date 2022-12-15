@@ -40,7 +40,8 @@
 		</dependency>
 		
 		<!-- JPA Modelgen -->
-		<dependency>
+	
+			<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<scope>provided</scope>
@@ -141,14 +142,27 @@
 			</plugin>
 			
 			<plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-compiler-plugin</artifactId>
-                 <version>3.8.0</version><!--$NO-MVN-MAN-VER$-->
-                 <configuration>
-                 <release>1.8</release>
-                </configuration>
+				
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>    
+                <source>17</source>
+                <target>17</target>
+                <failOnError>false</failOnError>
+                
+                <generatedSourcesDirectory>src/main/java</generatedSourcesDirectory>
+              </configuration>
+			</plugin>
+		
+				
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+              
+                <configuration>
+                <skip>true</skip>
+                 </configuration>
             </plugin>
-			
+		
 		
 		</plugins>
 		
