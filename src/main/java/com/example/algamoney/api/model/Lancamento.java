@@ -1,4 +1,4 @@
-package com.example.algamoney.api.model;
+	package com.example.algamoney.api.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "lancamento")
@@ -50,10 +53,17 @@ public class Lancamento {
 	@JoinColumn(name = "codigo_categoria")
 	private Categoria categoria;
 	
+	// Não queremos listar contatos , diminuindo tamanho do Json
+	@JsonIgnoreProperties("contatos")
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;
+	
+	@JsonIgnore // Para não retornar no json
+	public boolean isReceita() {
+		return TipoLancamento.RECEITA.equals(this.tipo);
+	}	
 
 	public Long getCodigo() {
 		return codigo;

@@ -16,7 +16,14 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		
+		<jasperreports.version>6.20.0</jasperreports.version>
+		<jasperreports-functions.version>6.20.0</jasperreports-functions.version>
+		<jasperreports-fonts.version>6.20.0</jasperreports-fonts.version>
+		
 	</properties>
+	
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -40,6 +47,12 @@
 		</dependency>
 		
 		<!-- JPA Modelgen -->
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-jpamodelgen</artifactId>
+			
+		</dependency>
 	
 		
 		<dependency>
@@ -121,9 +134,34 @@
             <version>1.1.1.RELEASE</version>
         </dependency>
         
- 
+        <!-- JasperReports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>${jasperreports.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-functions</artifactId>
+			<version>${jasperreports-functions.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>${jasperreports-fonts.version}</version>
+			
+		</dependency>
+		<!-- Email -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+        
+        <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
-		
 	</dependencies>
 
 	<build>
@@ -136,19 +174,7 @@
               </configuration>
 			</plugin>
 			
-			
-			<plugin>
-				
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>    
-                <source>17</source>
-                <target>17</target>
-
-                
-                <generatedSourcesDirectory>src/main/java</generatedSourcesDirectory>
-              </configuration>
-			</plugin>
-		
+	
 				
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -161,8 +187,17 @@
 		
 		
 		</plugins>
-		
-		
+			
 	</build>
+	
+	<!-- Repositório do Jasper aonde agente precisa fazer os downloads das versões que precisamos-->
+	<repositories>
+		<repository>
+			<id>jr-ce-releases</id>
+			<url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+		</repository>
+	</repositories>
+	
+	
 
 </project>

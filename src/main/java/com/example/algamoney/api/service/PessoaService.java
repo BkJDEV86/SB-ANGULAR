@@ -15,12 +15,24 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
+	public Pessoa salvar(Pessoa pessoa) {
+		pessoa.getContatos().forEach(c -> c.setPessoa(pessoa));
+		return pessoaRepository.save(pessoa);
+	}
+	
 	
 	public Pessoa atualizar(Long codigo, Pessoa pessoa) {
 		 Pessoa pessoaSalva = buscarPessoaPeloCodigo(codigo);// Aqui é que é esperado pelo menos um recurso
-	          // Aqui abaixo vamos pegar a pessoa passada na requisição do postmam e salva-la no banco de dados
+		 
+		    pessoaSalva.getContatos().clear();
+			pessoaSalva.getContatos().addAll(pessoa.getContatos());
+			pessoaSalva.getContatos().forEach(c -> c.setPessoa(pessoaSalva));
+
+			// como já esta adicionado a pessoasalva em contatos na linha acima temos que ignorá-la abaixo
+			BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo", "contatos");
+	          // Aqui acima vamos pegar a pessoa passada na requisição do postmam e salva-la no banco de dados
 			  // através de pessoasalva. Tiramos o código aqui pois ele vem pela URL não passando o código na atualização.
-			  BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
+			 
 			  return this.pessoaRepository.save(pessoaSalva);
 	}
 

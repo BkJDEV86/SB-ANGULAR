@@ -60,7 +60,7 @@ public class PessoaResource {
 	public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response){
 		// Aqui é necessario instanciar o objeto categoriaSalva pois vamos precisar do id.
 		
-		Pessoa pessoaSalva = pessoaRepository.save(pessoa);
+		Pessoa pessoaSalva = pessoaService.salvar(pessoa);
 		
 		// Aqui é passaod o this que é o próprio objeto da classe, a resposta e o código da pessoa salva
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getCodigo()));
