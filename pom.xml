@@ -48,11 +48,6 @@
 		
 		<!-- JPA Modelgen -->
 		
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			
-		</dependency>
 	
 		
 		<dependency>
@@ -173,6 +168,7 @@
                 <mainClass>com.example.algamoney.api.AlgamoneyApiApplication</mainClass>
               </configuration>
 			</plugin>
+	
 			
 	
 				
@@ -181,9 +177,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
               
                 <configuration>
+                
                 <skip>true</skip>
                  </configuration>
             </plugin>
+            
+            	
 		
 		
 		</plugins>
