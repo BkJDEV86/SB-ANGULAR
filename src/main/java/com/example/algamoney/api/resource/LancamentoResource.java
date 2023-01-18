@@ -105,13 +105,13 @@ public class LancamentoResource {
 	}
 	
 	// Aqui foi feita uma alteração para poder visualizar os dados corretamente...
-	@GetMapping("/estatisticas/por-categoria")
-	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
-	public List<LancamentoEstatisticaCategoria> porCategoria(
-			@RequestParam(name = "mesReferencia", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") 
-			LocalDate mesReferencia) {
-		return this.lancamentoRepository.porCategoria(mesReferencia);
-	}
+		@GetMapping("/estatisticas/por-categoria")
+		@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and hasAuthority('SCOPE_read')")
+		public List<LancamentoEstatisticaCategoria> porCategoria(
+				@RequestParam(name = "mesReferencia", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") 
+				LocalDate mesReferencia) {
+			return this.lancamentoRepository.porCategoria(mesReferencia);
+		}
 	
 	@GetMapping
 	// Pageable é para colocar paginação.
